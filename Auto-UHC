@@ -1,0 +1,119 @@
+#========================#
+#==	 Randall's	  ==#
+#==	 UHC Skript	 ==#
+#==	 Version 1.0	==#
+#========================#
+ 
+# Feel free to edit this to your heart's content.
+# If you see an error, please contact me at randall123459@gmail.com 
+#============#
+#=  Config  =#
+#============#
+options:
+	host: Randall123459
+	border: 1000
+	bantime: 2h
+	hosttwitter: Randall123459
+
+#============#
+#= Commands =#
+#============#
+command /setwalls:		
+	description:	Set the walls for a UHC game
+	usage:	/setwalls
+	permission:	 uhc.walls uhc.*
+	trigger:
+		broadcast "&b&l<<&5&lUHC&n&6&l Setting walls!"
+		broadcast "&b&l<<&5&lUHC&n&6&l Expect lag!"
+		make player execute command "/tppos 0 250 0"
+		wait 1 second
+		make player execute command "//pos1 0,0,0"
+		make player execute command "//pos2 0,0,0"
+		wait 1 second
+		make player execute command "//expand {@border} N "
+		wait 5 ticks
+		make player execute command "//expand {@border} S "
+		wait 5 ticks
+		make player execute command "//expand {@border} E "
+		wait 5 ticks
+		make player execute command "//expand {@border} W "
+		wait 5 ticks
+		make player execute command "//expand vert"
+		wait 1 second
+		make player execute command "//walls 95"
+ 
+command /uhcscatter:	
+	description:	 Scatters UHCers
+	usage:	 /uhcscatter
+	permission:	 uhc.scatter, uhc.*
+	trigger:	
+		make player execute command "/scatterradius {@border} world"
+		wait 1 seconds
+		execute console command "/scatter"
+		broadcast "&b&l<<&5&lUHC&n&6&lScattering all players!"
+		wait 5 seconds
+		execute console command "/freezeall"
+		
+command /whitelistall:
+	description: Whitelists all players
+	usage: /whitelistall
+	permission: uhc.whitelistall, uhc.*
+	trigger:
+		execute console command "/whitelist add @a"
+		execute console command "/broadcast &b&l<<&5&lUHC&n&6&lAll Players Whitelisted"
+command /uhcstart:	
+	description: Start a game of automated UHC
+	usage: /uhcstart
+	permission:	 uhc.start, uhc.*
+	trigger:	
+		broadcast "&b&l<<&5&lUHC&n&6&lA UHC game has been started!"
+		execute console command "/heal *"
+		execute console command "/gamerule naturalRegeneration false"
+		execute console command "/feed *"
+		execute console command "/ci *"
+		wait 5 seconds
+		broadcast "&b&l<<&5&lUHC&n&6&lGame is starting!"
+		wait 2 seconds
+		broadcast "&b&l<<&5&lUHC&n&6&lGame is starting in 5"
+		wait 1 second
+		broadcast "&b&l<<&5&lUHC&n&6&lGame is starting in 4"
+		wait 1 second
+		broadcast "&b&l<<&5&lUHC&n&6&lGame is starting in 3"
+		wait 1 second
+		broadcast "&b&l<<&5&lUHC&n&6&lGame is starting in 2"
+		wait 1 second
+		broadcast "&b&l<<&5&lUHC&n&6&lGame is starting in 1"
+		wait 1 second
+		broadcast "&b&l<<&5&lUHC&n&6&lThe Game has begun!"
+		execute console command "/unfreezeall"
+		wait 5 seconds
+		execute console command "/healall"
+		execute console command "/feedall"
+		broadcast "&b&l<<&5&lUHC&n&6&lPVP will be enabled in 15 minutes!"
+		wait 1 tick
+		execute console command "/give @a 364 8"
+		execute console command "/time set 0"
+		wait 10 minutes
+		execute console command "/healall"
+		execute console command "/feedall"
+		broadcast "&b&l<<&5&lUHC&n&6&lAll players have been healed and have been given a chance to replenish there hunger!"
+		wait 15 minutes
+		execute console command "/pvptoggle"
+		execute console command "/aps mob.wither.shoot"
+		broadcast "&b&l<<&5&lUHC&n&6&lPVP has been enabled!"
+		broadcast "&b&l<<&5&lUHC&n&6&lMeetup will be in 1 hour and 15 minutes!"
+		execute console command "/timer 4500 Meetup in:"
+		wait 75 minutes
+		broadcast "&b&l<<&5&lUHC&n&6&l MEETUP IS NOW. HEAD TO 0,0, ONLY STOP FOR FIGHTS!"
+		wait 5 minutes				 
+		broadcast "&b&l<<&5&lUHC&n&6&l Tp'ing All Players To 0,0 NOW!!"
+		execute console command "/tpall {@host}" 
+
+on death of player:					
+	execute console command "/deathban ban %player% {@bantime}"
+	execute console command "/msg %player% <aqua><bold>Thanks for playing this UHC hosted by {@host} follow @{@hosttwitter} on twitter for more UHC's"
+	strike lightning effect at the victim
+	execute console command "/spectate on %player%"
+				 
+on portal enter:
+	execute console command "/msg %player% <aqua><bold>Damn you are dumb nether is not enabled!"
